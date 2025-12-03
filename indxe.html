@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منشئ المواقع الذكي</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Cairo for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- 1. Auth Page -->
+        <div id="auth-page" class="page active">
+            <div class="form-card">
+                <h1>مرحباً بك</h1>
+                <p>الرجاء إدخال بريدك الإلكتروني وكلمة المرور للبدء</p>
+                <form id="auth-form">
+                    <div class="input-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" data-state-key="auth.email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">كلمة المرور</label>
+                        <input type="password" id="password" data-state-key="auth.password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">ابدأ الآن</button>
+                </form>
+                <div id="user-id-display" class="hidden">
+                    <p>معرف المستخدم الخاص بك هو:</p>
+                    <strong id="generated-user-id"></strong>
+                    <p>احتفظ به جيداً لاستلام مشروعك!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Start Page -->
+        <div id="start-page" class="page">
+            <div class="start-page-content">
+                <div class="logo-area">
+                    <h1>منشئ المواقع الذكي</h1>
+                    <p>اصنع موقعك الإلكتروني المثالي في دقائق</p>
+                </div>
+                <div class="main-options">
+                    <button class="option-card" data-project-type="full-website">
+                        <h3>إنشاء موقع كامل</h3>
+                        <p>خيار متكامل مع جميع الأقسام والصفحات</p>
+                    </button>
+                    <button class="option-card" data-project-type="landing-page">
+                        <h3>إنشاء صفحة هبوط</h3>
+                        <p>صفحة واحدة مصممة للتركيز على هدف معين</p>
+                    </button>
+                    <button class="option-card" data-project-type="ai-creative">
+                        <h3>دع النظام يبدع</h3>
+                        <p>الوضع الإبداعي المدعوم بالذكاء الاصطناعي</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Wizard System -->
+        <div id="wizard-page" class="page">
+            <div class="wizard-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                
+                <!-- Full Website Wizard Steps -->
+                <div id="wizard-full-website" class="wizard-content">
+                    <!-- Step 1: Languages -->
+                    <div class="wizard-step active" id="step-1">
+                        <h2>الخطوة 1: اختيار اللغات</h2>
+                        <p>ما اللغات التي سيعمل بها الموقع؟</p>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked disabled> الإنجليزية (إلزامية)</label>
+                            <label><input type="checkbox" data-state-key="fullWebsite.languages.secondary" value="ar"> العربية</label>
+                            <label><input type="checkbox" data-state-key="fullWebsite.languages.secondary" value="fr"> الفرنسية</label>
+                            <label><input type="checkbox" data-state-key="fullWebsite.languages.secondary" value="es"> الإسبانية</label>
+                            <label><input type="checkbox" data-state-key="fullWebsite.languages.secondary" value="de"> الألمانية</label>
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="nextStep()">التالي</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Hero Background -->
+                    <div class="wizard-step" id="step-2">
+                        <h2>الخطوة 2: الخلفية الرئيسية</h2>
+                        <p>ما نوع الخلفية التي تريدها للقسم الرئيسي؟</p>
+                        <div class="card-selector">
+                            <div class="selector-card" data-value="image">
+                                <h3>صورة خلفية</h3>
+                            </div>
+                            <div class="selector-card" data-value="animated">
+                                <h3>خلفية متحركة</h3>
+                            </div>
+                            <div class="selector-card" data-value="solid">
+                                <h3>لون ثابت</h3>
+                            </div>
+                        </div>
+                        <div id="hero-bg-options" class="dynamic-options"></div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="nextStep()">التالي</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Ads -->
+                    <div class="wizard-step" id="step-3">
+                        <h2>الخطوة 3: الإعلانات</h2>
+                        <p>هل تريد إضافة إعلانات؟</p>
+                        <div class="toggle-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="ads-enabled" data-state-key="fullWebsite.ads.enabled">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div id="ads-options" class="dynamic-options hidden">
+                            <div class="input-group">
+                                <label for="adsense-code">كود AdSense</label>
+                                <textarea id="adsense-code" data-state-key="fullWebsite.ads.code" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="nextStep()">التالي</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Footer -->
+                    <div class="wizard-step" id="step-4">
+                        <h2>الخطوة 4: التذييل (Footer)</h2>
+                        <p>تفاصيل التذييل</p>
+                        <div class="input-group">
+                            <label for="footer-copyright">نص حقوق النشر</label>
+                            <input type="text" id="footer-copyright" data-state-key="fullWebsite.footer.copyright" placeholder="مثال: جميع الحقوق محفوظة @ 2024">
+                        </div>
+                        <div class="input-group">
+                            <label>روابط التواصل الاجتماعي</label>
+                            <div class="social-links-inputs">
+                                <input type="url" data-state-key="fullWebsite.footer.social.facebook" placeholder="Facebook URL">
+                                <input type="url" data-state-key="fullWebsite.footer.social.twitter" placeholder="Twitter URL">
+                                <input type="url" data-state-key="fullWebsite.footer.social.linkedin" placeholder="LinkedIn URL">
+                            </div>
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="goToSummary()">إنهاء</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Landing Page Wizard Steps (Simplified) -->
+                <div id="wizard-landing-page" class="wizard-content hidden">
+                     <!-- Step 1: Hero Background -->
+                     <div class="wizard-step active" id="lp-step-1">
+                        <h2>الخطوة 1: الخلفية الرئيسية</h2>
+                        <p>اختر لونًا رئيسيًا لصفحتك.</p>
+                        <div class="input-group">
+                            <label for="lp-primary-color">اللون الرئيسي</label>
+                            <input type="color" id="lp-primary-color" data-state-key="landingPage.primaryColor">
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="nextStep()">التالي</button>
+                        </div>
+                    </div>
+                    <!-- Step 2: Footer -->
+                    <div class="wizard-step" id="lp-step-2">
+                        <h2>الخطوة 2: التذييل (Footer)</h2>
+                        <p>تفاصيل التذييل</p>
+                        <div class="input-group">
+                            <label for="lp-footer-copyright">نص حقوق النشر</label>
+                            <input type="text" id="lp-footer-copyright" data-state-key="landingPage.footer.copyright" placeholder="مثال: جميع الحقوق محفوظة @ 2024">
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="goToSummary()">إنهاء</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Creative Mode Wizard Steps -->
+                <div id="wizard-ai-creative" class="wizard-content hidden">
+                    <!-- Step 1: Project Description -->
+                    <div class="wizard-step active" id="ai-step-1">
+                        <h2>الوضع الإبداعي</h2>
+                        <p>صف لنا مشروعك، ودع الذكاء الاصطناعي يبدع.</p>
+                        <div class="input-group">
+                            <label for="ai-description">وصف المشروع</label>
+                            <textarea id="ai-description" data-state-key="aiCreative.description" rows="8" placeholder="مثال: أريد إنشاء موقع لوكالة تسويق رقمي، بتصميم عصري وألوان زرقاء ورمادية..."></textarea>
+                        </div>
+                        <div class="wizard-actions">
+                            <button class="btn-secondary" onclick="prevStep()">السابق</button>
+                            <button class="btn-primary" onclick="goToSummary()">إنهاء</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Summary Page -->
+        <div id="summary-page" class="page">
+            <div class="form-card">
+                <h1>ملخص المشروع</h1>
+                <p>يرجى مراجعة تفاصيل موقعك قبل التوليد النهائي.</p>
+                <pre id="summary-content"></pre>
+                <button class="btn-primary" onclick="submitData()">🎉 توليد الموقع الآن</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
